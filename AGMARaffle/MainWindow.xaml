@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGMARaffle"
         mc:Ignorable="d"
-        Title="Online Raffle" Height="500" Width="1000">
+        Title="BENECO AGMA 2021 Online Raffle" Height="500" Width="1000">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120" />
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100" />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Image Source="/benecologo.png" Grid.Column="0" Grid.Row="0" />
+        <TextBlock Text="AGMA 2021 Online Raffle" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  FontSize="36" FontFamily="Segoe UI Semibold" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <DataGrid x:Name="listResults" AlternatingRowBackground="LightGreen" Grid.Column="3" Grid.RowSpan="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Account No." />
+                <DataGridTextColumn Header="Account Name" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button x:Name="drawButton" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Content="DRAW" FontSize="36" FontFamily="Segoe UI Semibold" Width="470" Height="70" />
+
+        <TextBlock x:Name="txt_accountno" Text="Account No." Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" FontFamily="Segoe UI Semibold" FontSize="36" HorizontalAlignment="Center" />
+
+        <TextBlock x:Name="txt_accountname" Text="Account Name" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" FontFamily="Segoe UI Semibold" FontSize="30" HorizontalAlignment="Center" />
+
     </Grid>
 </Window>
