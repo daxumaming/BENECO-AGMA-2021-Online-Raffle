@@ -43,32 +43,42 @@ namespace AGMARaffle
             using MySqlDataReader rafDraw_rdr = rafDraw_cmd.ExecuteReader();
             rafDraw_rdr.Read();
 
-            // set variable
-            String id = rafDraw_rdr.GetString(0);
-            String actno = rafDraw_rdr.GetString(1);
-            String actname = rafDraw_rdr.GetString(2);
+            if (rafDraw_rdr.HasRows)
+            {
 
-            // show results
-            txt_accountno.Text = actno;
-            txt_accountname.Text = actname;
-            listResults.Items.Add(new { idno = id, acctno = actno, acctname = actname });
+                // set variable
+                String id = rafDraw_rdr.GetString(0);
+                String actno = rafDraw_rdr.GetString(1);
+                String actname = rafDraw_rdr.GetString(2);
 
-            // initialize and open database
-            using var rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-            rafUpd_conn.Open();
+                // show results
+                txt_accountno.Text = actno;
+                txt_accountname.Text = actname;
+                listResults.Items.Add(new { idno = id, acctno = actno, acctname = actname });
 
-            // update record, set flag to true
-            String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            String rafUpd_sql =
-                "UPDATE registeredattendees SET flag_selected = 1 " +
-                "WHERE id = " + id;
+                // initialize and open database
+                using var rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
+                rafUpd_conn.Open();
 
-            using var rafUpd_cmd = new MySqlCommand();
-            rafUpd_cmd.Connection = rafUpd_conn;
-            rafUpd_cmd.CommandText = rafUpd_sql;
-            rafUpd_cmd.ExecuteNonQuery();
+                // update record, set flag to true
+                String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                String rafUpd_sql =
+                    "UPDATE registeredattendees SET flag_selected = 1 " +
+                    "WHERE id = " + id;
 
+                using var rafUpd_cmd = new MySqlCommand();
+                rafUpd_cmd.Connection = rafUpd_conn;
+                rafUpd_cmd.CommandText = rafUpd_sql;
+                rafUpd_cmd.ExecuteNonQuery();
 
+            } else
+            {
+                txt_accountno.Text = "";
+                txt_accountname.Text = "No more qualified attendees to draw.";
+            }
+           
+                
+         
 
         }
     }
