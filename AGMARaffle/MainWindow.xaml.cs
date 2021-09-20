@@ -54,7 +54,8 @@ namespace AGMARaffle
                 // show results
                 txt_accountno.Text = actno;
                 txt_accountname.Text = actname;
-                listResults.Items.Add(new { idno = id, acctno = actno, acctname = actname });
+                //listResults.Items.Add(new { idno = id, acctno = actno, acctname = actname });
+                listResults.Items.Add(new { acctno = actno, acctname = actname });
 
                 // initialize and open database
                 using var rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
@@ -63,7 +64,9 @@ namespace AGMARaffle
                 // update record, set flag to true
                 String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 String rafUpd_sql =
-                    "UPDATE registeredattendees SET flag_selected = 1 " +
+                    "UPDATE registeredattendees " +
+                    "SET flag_selected = 1, " +
+                    "datetimeselected = '" + dtnow + "' " +
                     "WHERE id = " + id;
 
                 using var rafUpd_cmd = new MySqlCommand();

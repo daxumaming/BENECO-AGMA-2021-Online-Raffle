@@ -26,9 +26,9 @@
 
         <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding idno}"/>
-                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}"/>
-                <DataGridTextColumn Header="Account Name" Binding="{Binding acctname}" />
+                <!-- <DataGridTextColumn Header="ID" Binding="{Binding idno}"/> -->
+                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="120"/>
+                <DataGridTextColumn Header="Account Name" Binding="{Binding acctname}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
