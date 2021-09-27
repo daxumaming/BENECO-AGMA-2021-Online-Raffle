@@ -25,7 +25,8 @@ namespace AGMARaffle.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;PORT=3306;Database=agmaraffle;Uid=agma;Pwd=!Agma1;SslMode=none;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=api.beneco.com.ph;PORT=3306;Database=agmaraffle;Uid=agma;Pwd=!Agma1;SslMod" +
+            "e=none;")]
         public string ConnectionString {
             get {
                 return ((string)(this["ConnectionString"]));

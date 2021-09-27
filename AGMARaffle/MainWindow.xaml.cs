@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using MySql.Data.MySqlClient;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AGMARaffle
 {
@@ -79,10 +67,14 @@ namespace AGMARaffle
                 txt_accountno.Text = "";
                 txt_accountname.Text = "No more qualified attendees to draw.";
             }
-           
-                
-         
-
         }
+
+        private void listWinnersButton_Click(object sender, RoutedEventArgs e)
+        {
+            // open another Window showing list of winners
+            var winnerListWindow = new WinnersList();
+            winnerListWindow.Show();
+        }
+
     }
 }

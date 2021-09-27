@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGMARaffle"
         mc:Ignorable="d"
-        Title="BENECO AGMA 2021 Online Raffle" Height="500" Width="1000">
+        Title="BENECO AGMA 2021 Online Raffle" Height="800" Width="1500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" />
@@ -24,7 +24,7 @@
         <Image Source="/benecologo.png" Grid.Column="0" Grid.Row="0" />
         <TextBlock Text="AGMA 2021 Online Raffle" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"  FontSize="36" FontFamily="Segoe UI Semibold" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" />
 
-        <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" >
+        <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" FontSize="20" >
             <DataGrid.Columns>
                 <!-- <DataGridTextColumn Header="ID" Binding="{Binding idno}"/> -->
                 <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="120"/>
@@ -37,6 +37,8 @@
         <TextBlock x:Name="txt_accountname" Text="Ready...." Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" FontFamily="Segoe UI Semibold" FontSize="30" HorizontalAlignment="Center" />
 
         <Button x:Name="drawButton" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Content="DRAW" FontSize="36" FontFamily="Segoe UI Semibold" Width="470" Height="70" ClickMode="Press" Click="drawButton_Click" />
+
+        <Button x:Name="listWinners" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Width="400" Height="50" ClickMode="Press" Click="listWinnersButton_Click" />
 
     </Grid>
 </Window>
