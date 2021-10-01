@@ -90,7 +90,7 @@ namespace AGMARaffle
                     "SELECT id, accountno, firstname, lastname, emailaddress FROM registeredattendees " +
                     "WHERE accountname NOT IN " +
                     "(SELECT accountname FROM registeredattendees WHERE flag_winner = 1) " +
-                    "AND accountno != '' " +
+                    "AND accountno != '' AND accountno IS NOT null " +
                     "ORDER BY RAND() LIMIT 1 ";
 
                 using var rafDraw_cmd = new MySqlCommand(rafDraw_sql, rafDraw_conn);
