@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ConnectionString" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">Server=localhost;PORT=3306;Database=agmaraffle;Uid=agma;Pwd=!Agma1;SslMode=none;</Value>
+      <Value Profile="(Default)">Server=api.beneco.com.ph;PORT=3306;Database=agmaraffle;Uid=agma;Pwd=!Agma1;SslMode=none;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

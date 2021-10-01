@@ -1,4 +1,4 @@
-﻿<Window x:Class="AGMARaffle.MainWindow"
+﻿<Window x:Name="windowRaffle" x:Class="AGMARaffle.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,6 +19,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Image Source="/benecologo.png" Grid.Column="0" Grid.Row="0" />
@@ -26,9 +27,9 @@
 
         <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" FontSize="20" >
             <DataGrid.Columns>
-                <!-- <DataGridTextColumn Header="ID" Binding="{Binding idno}"/> -->
-                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="120"/>
-                <DataGridTextColumn Header="Account Name" Binding="{Binding acctname}" Width="*"/>
+                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="140"/>
+                <DataGridTextColumn Header="MCO Name" Binding="{Binding acctname}" Width="*"/>
+                <DataGridTextColumn Header="Email Address" Binding="{Binding emailadd}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -38,7 +39,12 @@
 
         <Button x:Name="drawButton" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Content="DRAW" FontSize="36" FontFamily="Segoe UI Semibold" Width="470" Height="70" ClickMode="Press" Click="drawButton_Click" />
 
-        <Button x:Name="listWinners" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Width="400" Height="50" ClickMode="Press" Click="listWinnersButton_Click" />
+        <TextBlock x:Name="txt_prizeNo" Margin="45,40,0,0" Grid.Row="4" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="48" Width="61" FontFamily="Segoe UI Semibold" FontSize="30" HorizontalAlignment="Left" FontStyle="Italic" Padding="3"/>
+
+        <ComboBox x:Name="prizeDropdown" Grid.Column="1" HorizontalAlignment="Left" Margin="15,40,0,0" Grid.Row="4" VerticalAlignment="Top" Width="470" Grid.ColumnSpan="2" Height="48" FontSize="25" SelectionChanged="prizeDropdown_SelectionChanged"/>
+
+        <Button x:Name="listWinners" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Width="400" Height="50" ClickMode="Press" Click="listWinnersButton_Click" />
+
 
     </Grid>
 </Window>
