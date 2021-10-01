@@ -14,11 +14,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" FontSize="20" >
+        <DataGrid x:Name="listWinners" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" FontSize="20" ItemsSource="{Binding Path=LoadDataBinding}" >
             <DataGrid.Columns>
-                <!-- <DataGridTextColumn Header="ID" Binding="{Binding idno}"/> -->
-                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="120"/>
-                <DataGridTextColumn Header="Account Name" Binding="{Binding acctname}" Width="*"/>
+                <!--
+                <DataGridTextColumn Header="MCO Name" Binding="{Binding mconame}" Width="*"/>
+                <DataGridTextColumn Header="Email Address" Binding="{Binding emailaddress}" Width="*"/>
+                <DataGridTextColumn Header="Prize Won" Binding="{Binding prizewon}" Width="*"/>
+                <DataGridTextColumn Header="Draw Time" Binding="{Binding drawtime}" Width="*"/>
+                -->
             </DataGrid.Columns>
         </DataGrid>
         

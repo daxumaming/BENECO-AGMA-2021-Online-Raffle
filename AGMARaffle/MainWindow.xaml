@@ -27,7 +27,7 @@
 
         <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="3" Grid.RowSpan="5" FontSize="20" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="140"/>
+                <DataGridTextColumn Header="Account No." Binding="{Binding acctno}" Width="160"/>
                 <DataGridTextColumn Header="MCO Name" Binding="{Binding acctname}" Width="*"/>
                 <DataGridTextColumn Header="Email Address" Binding="{Binding emailadd}" Width="*"/>
             </DataGrid.Columns>
