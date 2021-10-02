@@ -86,7 +86,7 @@ namespace AGMARaffle
             else
             {
                 // wait three seconds
-                //await Task.Delay(3000);
+                await Task.Delay(3000);
 
                 // initialize and open database
                 using var rafDraw_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
