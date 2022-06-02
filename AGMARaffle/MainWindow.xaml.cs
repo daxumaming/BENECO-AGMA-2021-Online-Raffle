@@ -23,29 +23,45 @@ namespace AGMARaffle
         void windowRaffle_Loaded(object sender, RoutedEventArgs e)
         {
             // initialize and open database
-            using var prizeList_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-            prizeList_conn.Open();
+            //using var prizeList_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString)
 
-            // fetch list of prizes
-            String prizeList_sql =
-                "SELECT prize_name FROM prizes ORDER BY prizeid ASC";
-
-            using var prizeList_cmd = new MySqlCommand(prizeList_sql, prizeList_conn);
-            using MySqlDataReader prizeList_rdr = prizeList_cmd.ExecuteReader();
-
-            if (prizeList_rdr.HasRows)
+            using (MySqlConnection prizeList_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
             {
-                //ComboBox prizeDropdown = new ComboBox();
-
-                while (prizeList_rdr.Read())
+                try
                 {
-                    prizeDropdown.Items.Add(prizeList_rdr.GetString(0));
-                }
+                    prizeList_conn.Open();
 
-            }
-            else
-            {
-                MessageBox.Show("Error retrieving list of prizes.");
+                    // fetch list of prizes
+                    String prizeList_sql =
+                        "SELECT prize_name FROM prizes ORDER BY prizeid ASC";
+
+                    using var prizeList_cmd = new MySqlCommand(prizeList_sql, prizeList_conn);
+                    using MySqlDataReader prizeList_rdr = prizeList_cmd.ExecuteReader();
+
+                    if (prizeList_rdr.HasRows)
+                    {
+                        //ComboBox prizeDropdown = new ComboBox();
+
+                        while (prizeList_rdr.Read())
+                        {
+                            prizeDropdown.Items.Add(prizeList_rdr.GetString(0));
+                        }
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error retrieving list of prizes.");
+                    }
+
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    prizeList_conn.Close();
+                }
             }
 
         }
@@ -56,27 +72,45 @@ namespace AGMARaffle
             String selectedItem = prizeDropdown.SelectedItem.ToString();
 
             // initialize and open database
-            using var prizeNo_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-            prizeNo_conn.Open();
+            using (MySqlConnection prizeNo_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
+            {
+                try
+                {
+                    prizeNo_conn.Open();
 
-            // fetch random record from database
-            String prizeNo_sql =
-                "SELECT total, issued FROM prizes WHERE prize_name = @prizename";
+                    // fetch record from database based on selected prize item
+                    String prizeNo_sql =
+                        "SELECT total, issued FROM prizes WHERE prize_name = @prizename";
 
-            using var prizeNo_cmd = new MySqlCommand(prizeNo_sql, prizeNo_conn);
-            prizeNo_cmd.Parameters.AddWithValue("@prizename", selectedItem);
-            using MySqlDataReader prizeNo_rdr = prizeNo_cmd.ExecuteReader();
-            prizeNo_rdr.Read();
-            int remaining = prizeNo_rdr.GetInt32(0) - prizeNo_rdr.GetInt32(1);
+                    using var prizeNo_cmd = new MySqlCommand(prizeNo_sql, prizeNo_conn);
+                    prizeNo_cmd.Parameters.AddWithValue("@prizename", selectedItem);
+                    using MySqlDataReader prizeNo_rdr = prizeNo_cmd.ExecuteReader();
+                    prizeNo_rdr.Read();
 
-            txt_prizeNo.Text = remaining.ToString();
+                    // deduct issued from total
+                    int remaining = prizeNo_rdr.GetInt32(0) - prizeNo_rdr.GetInt32(1);
+
+                    // Update label with remaining prize
+                    txt_prizeNo.Text = remaining.ToString();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    prizeNo_conn.Close();
+                }
+            }
+                
+
+                    
         }
 
 
         private async void drawButton_Click(object sender, RoutedEventArgs e)
         {
-            txt_accountno.Text = "";
-            txt_accountname.Text = "searching....";
+            txt_stubno.Content = "";
 
             // check if there's a value from ComboBox
             if (prizeDropdown.SelectedIndex == -1)
@@ -85,85 +119,127 @@ namespace AGMARaffle
             }
             else
             {
+                txt_winners.Content = "searching....";
+
                 // wait three seconds
                 await Task.Delay(3000);
 
                 // initialize and open database
-                using var rafDraw_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-                rafDraw_conn.Open();
-
-                // fetch random record from database
-                String rafDraw_sql =
-                    "SELECT id, accountno, firstname, lastname, emailaddress FROM registeredattendees " +
-                    "WHERE accountname NOT IN " +
-                    "(SELECT accountname FROM registeredattendees WHERE flag_winner = 1) " +
-                    "AND accountno != '' AND accountno IS NOT null " +
-                    "AND flag_employee = 0 " +
-                    "ORDER BY RAND() LIMIT 1 ";
-
-                using var rafDraw_cmd = new MySqlCommand(rafDraw_sql, rafDraw_conn);
-                using MySqlDataReader rafDraw_rdr = rafDraw_cmd.ExecuteReader();
-                rafDraw_rdr.Read();
-
-                if (rafDraw_rdr.HasRows)
+                using (MySqlConnection rafDraw_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
                 {
+                    try
+                    {
+                        rafDraw_conn.Open();
 
-                    // set variable
-                    String selectedPrize = prizeDropdown.SelectedItem.ToString();
-                    String id = rafDraw_rdr.GetString(0);
-                    String actno = rafDraw_rdr.GetString(1);
-                    String actname = rafDraw_rdr.GetString(2) + " " + rafDraw_rdr.GetString(3);
-                    String emailaddress = rafDraw_rdr.GetString(4);
-
-                    // show results
-                    txt_accountno.Text = actno;
-                    txt_accountname.Text = actname;
-                    listResults.Items.Add(new { acctno = actno, acctname = actname, emailadd = emailaddress });
-
-                    // initialize and open database
-                    using var rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-                    rafUpd_conn.Open();
-
-                    // update record, set flag to true
-                    String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    String rafUpd_sql =
-                        "UPDATE registeredattendees " +
-                        "SET flag_winner = 1, " +
-                        "drawtime = '" + dtnow + "', " +
-                        "prize = @selectedPrize " +
-                        "WHERE id = " + id;
-
-                    using var rafUpd_cmd = new MySqlCommand();
-                    rafUpd_cmd.Connection = rafUpd_conn;
-                    rafUpd_cmd.CommandText = rafUpd_sql;
-                    rafUpd_cmd.Parameters.AddWithValue("@selectedPrize", selectedPrize);
-                    rafUpd_cmd.ExecuteNonQuery();
+                        // fetch random record from database
+                        String rafDraw_sql =
+                            "SELECT id, stubno, mconame FROM registeredmcos " +
+                            "WHERE flag_winner IS NULL " +
+                            "ORDER BY RAND() LIMIT 1 ";
 
 
-                    // update prize table
-                    using var prizeUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString);
-                    prizeUpd_conn.Open();
-                    String prizeUpd_sql =
-                        "UPDATE prizes " +
-                        "SET issued = issued + 1 " +
-                        "WHERE prize_name = @prizeName ";
-                    using var prizeUpd_cmd = new MySqlCommand();
-                    prizeUpd_cmd.Connection = prizeUpd_conn;
-                    prizeUpd_cmd.CommandText = prizeUpd_sql;
-                    prizeUpd_cmd.Parameters.AddWithValue("@prizeName", selectedPrize);
-                    prizeUpd_cmd.ExecuteNonQuery();
+                        using var rafDraw_cmd = new MySqlCommand(rafDraw_sql, rafDraw_conn);
+                        using MySqlDataReader rafDraw_rdr = rafDraw_cmd.ExecuteReader();
+                        rafDraw_rdr.Read();
 
-                    Int32 prizeTotal = Convert.ToInt32(txt_prizeNo.Text);
-                    prizeTotal--;
-                    txt_prizeNo.Text = prizeTotal.ToString();
+                        if (rafDraw_rdr.HasRows)
+                        {
+
+                            // set variable
+                            String selectedPrize = prizeDropdown.SelectedItem.ToString();
+                            String id = rafDraw_rdr.GetString(0);
+                            String stubno = rafDraw_rdr.GetString(1);
+                            String mconame = rafDraw_rdr.GetString(2);
+
+                            // show results
+                            txt_winners.Content = mconame;
+                            txt_stubno.Content = stubno;
+                            listResults.Items.Add(new { stubno = stubno, mconame = mconame, prize = selectedPrize });
 
 
+
+                            // update registeredmcos with prize and draw time
+                            using (MySqlConnection rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
+                            {
+                                try
+                                {
+                                    rafUpd_conn.Open();
+
+                                    // update record, set flag to true
+                                    String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    String rafUpd_sql =
+                                        "UPDATE registeredmcos " +
+                                        "SET flag_winner = 1, " +
+                                        "drawtime = '" + dtnow + "', " +
+                                        "prize = @selectedPrize " +
+                                        "WHERE id = " + id;
+
+                                    using var rafUpd_cmd = new MySqlCommand();
+                                    rafUpd_cmd.Connection = rafUpd_conn;
+                                    rafUpd_cmd.CommandText = rafUpd_sql;
+                                    rafUpd_cmd.Parameters.AddWithValue("@selectedPrize", selectedPrize);
+                                    rafUpd_cmd.ExecuteNonQuery();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                                finally
+                                {
+                                    rafUpd_conn.Close();
+                                }
+                                    
+                            }
+
+
+
+                            // update prize table
+                            using (MySqlConnection prizeUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
+                            {
+                                try
+                                {
+                                    prizeUpd_conn.Open();
+                                    String prizeUpd_sql =
+                                        "UPDATE prizes " +
+                                        "SET issued = issued + 1 " +
+                                        "WHERE prize_name = @prizeName ";
+                                    using var prizeUpd_cmd = new MySqlCommand();
+                                    prizeUpd_cmd.Connection = prizeUpd_conn;
+                                    prizeUpd_cmd.CommandText = prizeUpd_sql;
+                                    prizeUpd_cmd.Parameters.AddWithValue("@prizeName", selectedPrize);
+                                    prizeUpd_cmd.ExecuteNonQuery();
+
+                                    Int32 prizeTotal = Convert.ToInt32(txt_prizeNo.Text);
+                                    prizeTotal--;
+                                    txt_prizeNo.Text = prizeTotal.ToString();
+                                }
+                                catch (MySqlException ex)
+                                {
+                                    MessageBox.Show(ex.Message);
+                                }
+                                finally
+                                {
+                                    prizeUpd_conn.Close();
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            txt_stubno.Content = "";
+                            txt_winners.Content = "No more qualified attendees to draw";
+                        }
+                    }
+                    catch (MySqlException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        rafDraw_conn.Close();
+                    }
                 }
-                else
-                {
-                    txt_accountno.Text = "";
-                    txt_accountname.Text = "No more qualified attendees to draw.";
-                }
+                    
             }
 
             
