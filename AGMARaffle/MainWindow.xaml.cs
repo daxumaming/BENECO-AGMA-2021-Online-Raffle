@@ -56,7 +56,14 @@ namespace AGMARaffle
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    if (ex.Message.Contains("Unable to connect"))
+                    {
+                        MessageBox.Show("Cannot connect to the database.");
+                    } 
+                    else
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
                 finally
                 {
