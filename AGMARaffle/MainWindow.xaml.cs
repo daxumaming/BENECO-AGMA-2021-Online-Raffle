@@ -161,6 +161,7 @@ namespace AGMARaffle
                             // show results
                             txt_winners.Content = mconame;
                             txt_stubno.Content = "Stub No. " + stubno;
+                            txt_prize.Content = selectedPrize;
                             listResults.Items.Add(new { stubno = stubno, mconame = mconame, prize = selectedPrize });
 
 
