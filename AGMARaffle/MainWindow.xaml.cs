@@ -127,6 +127,8 @@ namespace AGMARaffle
             else
             {
                 txt_winners.Content = "searching....";
+                txt_prize.Content = "";
+                txt_stubno.Content = "";
 
                 // wait three seconds
                 await Task.Delay(3000);

@@ -41,11 +41,11 @@
 
         <Button x:Name="listWinners" Grid.Row="4" Grid.ColumnSpan="3" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Height="50" ClickMode="Press" Click="listWinnersButton_Click" Margin="11,38,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="461" />
 
-        <Label x:Name="txt_winners" Content="ready..." HorizontalAlignment="Center" Margin="134,0,0,66" Grid.Row="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Height="144" Width="978" FontWeight="Bold" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.Column="2" />
+        <Label x:Name="txt_winners" Content="ready..." HorizontalAlignment="Center" Margin="139,0,5,66" Grid.Row="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Height="129" Width="978" FontWeight="Bold" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.Column="2" />
 
         <Label x:Name="txt_prize" HorizontalAlignment="Center" Margin="134,0,0,92" Grid.Row="2" Grid.ColumnSpan="2" RenderTransformOrigin="0.066,-0.324" FontSize="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Height="80" Width="978" FontWeight="Bold" VerticalAlignment="Bottom" Grid.Column="2" Grid.RowSpan="2" />
 
-        <Label x:Name="txt_stubno" Content="" HorizontalAlignment="Center" Margin="134,88,0,81" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Width="982" FontWeight="Bold" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
+        <Label x:Name="txt_stubno" Content="" HorizontalAlignment="Center" Margin="139,82,1,87" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Width="982" FontWeight="Bold" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
 
     </Grid>
