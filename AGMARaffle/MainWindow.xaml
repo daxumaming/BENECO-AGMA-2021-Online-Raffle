@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AGMARaffle"
         mc:Ignorable="d"
-        Title="BENECO ARGAM 2022 Online Raffle" Height="800" Width="1500">
+        Title="BENECO ARGAM 2023 Online Raffle" Height="800" Width="1500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" />
