@@ -127,6 +127,8 @@ namespace AGMARaffle
             else
             {
                 txt_winners.Content = "searching....";
+                txt_prize.Content = "";
+                txt_stubno.Content = "";
 
                 var wheelWindow = new wheel();
                 wheelWindow.Show();
