@@ -39,7 +39,8 @@ namespace AGMARaffle
                     // fetch list of winners
                     String raffWinners_sql =
                         "SELECT stubno AS 'Stub No', mconame AS 'MCO Name', " +
-                        "prize AS 'Prize Won', drawtime AS 'Draw Time' " +
+                        "prize AS 'Prize Won', drawtime AS 'Draw Time', " +
+                        "IF(registeredmcos.claimed = 1, 'Yes', 'No') AS Claimed " +
                         "FROM registeredmcos " +
                         "WHERE flag_winner = 1 " +
                         "ORDER BY drawtime ASC";

@@ -128,8 +128,13 @@ namespace AGMARaffle
             {
                 txt_winners.Content = "searching....";
 
+                var wheelWindow = new wheel();
+                wheelWindow.Show();
+
                 // wait three seconds
-                await Task.Delay(3000);
+                await Task.Delay(5000);
+
+                wheelWindow.Close();
 
                 // initialize and open database
                 using (MySqlConnection rafDraw_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
@@ -162,6 +167,7 @@ namespace AGMARaffle
                             txt_winners.Content = mconame;
                             txt_stubno.Content = "Stub No. " + stubno;
                             txt_prize.Content = selectedPrize;
+                            txt_id.Content = id;
                             listResults.Items.Add(new { stubno = stubno, mconame = mconame, prize = selectedPrize });
 
 
@@ -199,38 +205,6 @@ namespace AGMARaffle
                                     
                             }
 
-
-
-                            // update prize table
-                            using (MySqlConnection prizeUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
-                            {
-                                try
-                                {
-                                    prizeUpd_conn.Open();
-                                    String prizeUpd_sql =
-                                        "UPDATE prizes " +
-                                        "SET issued = issued + 1 " +
-                                        "WHERE prize_name = @prizeName ";
-                                    using var prizeUpd_cmd = new MySqlCommand();
-                                    prizeUpd_cmd.Connection = prizeUpd_conn;
-                                    prizeUpd_cmd.CommandText = prizeUpd_sql;
-                                    prizeUpd_cmd.Parameters.AddWithValue("@prizeName", selectedPrize);
-                                    prizeUpd_cmd.ExecuteNonQuery();
-
-                                    Int32 prizeTotal = Convert.ToInt32(txt_prizeNo.Text);
-                                    prizeTotal--;
-                                    txt_prizeNo.Text = prizeTotal.ToString();
-                                }
-                                catch (MySqlException ex)
-                                {
-                                    MessageBox.Show(ex.Message);
-                                }
-                                finally
-                                {
-                                    prizeUpd_conn.Close();
-                                }
-                            }
-
                         }
                         else
                         {
@@ -260,6 +234,80 @@ namespace AGMARaffle
             winnerListWindow.Show();
         }
 
-        
+        private void claimButton_click(object sender, RoutedEventArgs e)
+        {
+            // update prize table
+            using (MySqlConnection prizeUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
+            {
+                String selectedPrize = prizeDropdown.SelectedItem.ToString();
+                String id = txt_id.Content.ToString();
+
+
+                // update claimed flag
+                using (MySqlConnection rafUpd_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
+                {
+                    try
+                    {
+                        rafUpd_conn.Open();
+
+                        // update record, set flag to true
+                        String dtnow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        String rafUpd_sql =
+                            "UPDATE registeredmcos " +
+                            "SET claimed = 1 " +
+                            "WHERE id = " + id;
+
+                        using var rafUpd_cmd = new MySqlCommand();
+                        rafUpd_cmd.Connection = rafUpd_conn;
+                        rafUpd_cmd.CommandText = rafUpd_sql;
+                        rafUpd_cmd.Parameters.AddWithValue("@selectedPrize", selectedPrize);
+                        rafUpd_cmd.ExecuteNonQuery();
+                    }
+                    catch (MySqlException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        rafUpd_conn.Close();
+                    }
+
+                }
+
+
+                // update prize issued
+                try
+                {
+                    prizeUpd_conn.Open();
+                    String prizeUpd_sql =
+                        "UPDATE prizes " +
+                        "SET issued = issued + 1 " +
+                        "WHERE prize_name = @prizeName ";
+                    using var prizeUpd_cmd = new MySqlCommand();
+                    prizeUpd_cmd.Connection = prizeUpd_conn;
+                    prizeUpd_cmd.CommandText = prizeUpd_sql;
+                    prizeUpd_cmd.Parameters.AddWithValue("@prizeName", selectedPrize);
+                    prizeUpd_cmd.ExecuteNonQuery();
+
+                    Int32 prizeTotal = Convert.ToInt32(txt_prizeNo.Text);
+                    prizeTotal--;
+                    txt_prizeNo.Text = prizeTotal.ToString();
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    prizeUpd_conn.Close();
+                }
+            }
+
+        }
+
+        private void unclaimButton_click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

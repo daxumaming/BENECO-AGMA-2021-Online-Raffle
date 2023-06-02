@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <Image Source="benecologo.png" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="119,0,10,33" Grid.RowSpan="2" RenderTransformOrigin="0.971,0.52" />
-        <TextBlock Text="ARGAM 2022 Online Raffle" Grid.Row="1" Grid.ColumnSpan="3"  FontSize="38" FontFamily="Segoe UI Semibold" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="11,93,0,124" Width="485" Grid.RowSpan="2" />
+        <TextBlock Text="AGMA 2023 Raffle" Grid.Row="1" Grid.ColumnSpan="3"  FontSize="38" FontFamily="Segoe UI Semibold" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="79,93,0,124" Width="359" Grid.RowSpan="2" />
 
         <DataGrid x:Name="listResults" AlternatingRowBackground="#FFF0F0F0" Grid.Column="2" Grid.RowSpan="3" FontSize="28" Margin="134,0,10,10" Grid.Row="3" Grid.ColumnSpan="2" Height="311" VerticalAlignment="Bottom" >
             <DataGrid.Columns>
@@ -33,13 +33,13 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="drawButton" Grid.Row="3" Grid.ColumnSpan="3" Content="DRAW" FontSize="36" FontFamily="Segoe UI Semibold" ClickMode="Press" Click="drawButton_Click" Margin="11,61,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="73" Width="461" />
+        <Button x:Name="drawButton" Grid.Row="3" Grid.ColumnSpan="3" Content="DRAW" FontSize="36" FontFamily="Segoe UI Semibold" ClickMode="Press" Click="drawButton_Click" Margin="14,61,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="73" Width="458" />
 
         <TextBlock x:Name="txt_prizeNo" Margin="11,43,0,0" Grid.Row="2" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Height="48" Width="61" FontFamily="Segoe UI Semibold" FontSize="30" HorizontalAlignment="Left" FontStyle="Italic" Padding="3" RenderTransformOrigin="0.818,4.529"/>
 
         <ComboBox x:Name="prizeDropdown" HorizontalAlignment="Left" Margin="79,43,0,0" Grid.Row="2" VerticalAlignment="Top" Width="393" Grid.ColumnSpan="3" Height="48" FontSize="32" SelectionChanged="prizeDropdown_SelectionChanged"/>
 
-        <Button x:Name="listWinners" Grid.Row="4" Grid.ColumnSpan="3" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Height="50" ClickMode="Press" Click="listWinnersButton_Click" Margin="11,38,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="461" />
+        <Button x:Name="listWinners" Grid.Row="4" Grid.ColumnSpan="3" Content="List of Winners" FontSize="20" FontFamily="Segoe UI Semibold" Height="50" ClickMode="Press" Click="listWinnersButton_Click" Margin="14,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="461" Grid.RowSpan="2" />
 
         <Label x:Name="txt_winners" Content="ready..." HorizontalAlignment="Center" Margin="134,0,0,66" Grid.Row="1" Grid.ColumnSpan="2" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Height="144" Width="978" FontWeight="Bold" VerticalAlignment="Bottom" Grid.RowSpan="2" Grid.Column="2" />
 
@@ -47,6 +47,9 @@
 
         <Label x:Name="txt_stubno" Content="" HorizontalAlignment="Center" Margin="134,88,0,81" RenderTransformOrigin="0.066,-0.324" FontSize="60" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Segoe UI Semibold" Width="982" FontWeight="Bold" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2" />
 
+        <Label x:Name="txt_id" Content="" HorizontalAlignment="Center" Margin="14,91,48,10" RenderTransformOrigin="0.066,-0.324" FontSize="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" Width="58" Grid.Row="5" />
+
+        <Button x:Name="claimButton" Content="Claimed" FontSize="36" FontFamily="Segoe UI Semibold" ClickMode="Press"  HorizontalAlignment="Left" Margin="14,26,0,0" Grid.Row="4" Width="458" Grid.ColumnSpan="3" Height="52" VerticalAlignment="Top" Click="claimButton_click"/>
 
     </Grid>
 </Window>
