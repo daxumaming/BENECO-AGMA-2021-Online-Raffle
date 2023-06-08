@@ -138,13 +138,13 @@ namespace AGMARaffle
                 txt_prize.Content = "";
                 txt_stubno.Content = "";
 
-                //var wheelWindow = new wheel();
-                //wheelWindow.Show();
+                var wheelWindow = new wheel();
+                wheelWindow.Show();
 
                 // wait three seconds
-                //await Task.Delay(5000);
+                await Task.Delay(5000);
 
-                //wheelWindow.Close();
+                wheelWindow.Close();
 
                 using (MySqlConnection rafDistrict_conn = new MySqlConnection(Properties.Settings.Default.ConnectionString))
                 {
